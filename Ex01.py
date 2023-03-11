@@ -1,40 +1,63 @@
-# criando as listas
-nomes = []
-horas_tarbalhadas = []
-periodos = []
-categorias = []
+# Definição de valores das horas
+salario_minimo = 1320.00
+valor_hora_gerente_noturno = salario_minimo * 0.1
+valor_hora_gerente_matutino_vespertino = salario_minimo * 0.15
+valor_hora_operario_noturno = salario_minimo * 0.09
+valor_hora_operario_matutino_vespertino = salario_minimo * 0.14
 
-#coletando informações e armazenando dados nas listas
-for c in range (2):
-    nome = str(input('Informe o nome'))
-    nomes.append(nome)
-    horas = float(input('Informe as horas trabalhadas: '))
-    horas_tarbalhadas.append(horas)
-    turno = int(input('Informe o turno de trabalho: 1(Matutino) 2(Vespertino) 3(Noturno)'))
-    periodos.append(turno)
-    categoria = int(input('Informe a categoria: 1(Gerente) 2(Operário)'))
-    categorias.append(categoria)
+# Definição da lista de funcionários
+funcionarios = []
 
-# Função para calcular ovalor da hora trabalhada
+# Loop para coletar informações dos funcionários
+while True:
+    nome = input("Digite o nome do funcionário (ou digite 'sair' para encerrar): ")
+    if nome.lower() == "sair":
+        break
 
-def calcular_valor_horas_trabalhadas(turno, horas):
-    valor_hora = 0
-    if turno == 3 and categoria == 1:
-        valor_hora = 10/100 * 1300
-    elif turno == 1 or turno == 2 and categoria == 1:
-        valor_hora = 15/100 * 1300
-    elif turno == 3 and categoria == 2:
-        valor_hora = 9/100 * 1300
-    elif turno == 1 or turno == 2 and categoria == 2:
-        valor_hora = 14/100 * 1300
-    else: 
-        print('Turno ou categoria inválido')
-    valor_total = valor_hora * horas
-    return valor_total
+    while True:
+        horas_trabalhadas = input("Digite a quantidade de horas trabalhadas no mês: ")
+        if horas_trabalhadas.isdigit():
+            horas_trabalhadas = int(horas_trabalhadas)
+            break
+        else:
+            print("Valor inválido. Digite um valor inteiro.")
 
-#calculando e mostrando o salário de cada funcionário
-salario = calcular_valor_horas_trabalhadas() * horas
+    while True:
+        turno = input("Digite o turno de trabalho (M = Matutino, V = Vespertino, N = Noturno): ")
+        if turno.upper() in ["M", "V", "N"]:
+            turno = turno.upper()
+            break
+        else:
+            print("Turno inválido. Digite M, V ou N.")
 
-# Apresentando resultados
-print('Olá {}, você trabalhou {} horas'.format(nome, horas))
-print('Seu salário é de {}'.format(salario))
+    while True:
+        categoria = input("Digite a categoria do funcionário (G = Gerente, O = Operário): ")
+        if categoria.upper() in ["G", "O"]:
+            categoria = categoria.upper()
+            break
+        else:
+            print("Categoria inválida. Digite G ou O.")
+
+    # Cálculo do valor da hora trabalhada
+    if categoria == "G":
+        if turno == "N":
+            valor_hora = valor_hora_gerente_noturno
+        else:
+            valor_hora = valor_hora_gerente_matutino_vespertino
+    else:
+        if turno == "N":
+            valor_hora = valor_hora_operario_noturno
+        else:
+            valor_hora = valor_hora_operario_matutino_vespertino
+
+    # Cálculo do salário do funcionário
+    salario = valor_hora * horas_trabalhadas
+
+    # Adicionando informações do funcionário à lista
+    funcionario = {"nome": nome, "horas_trabalhadas": horas_trabalhadas, "turno": turno, "categoria": categoria, "valor_hora": valor_hora, "salario": salario}
+    funcionarios.append(funcionario)
+
+# Impressão dos salários dos funcionários
+for funcionario in funcionarios:
+    print(f"Nome: {funcionario['nome']} - Salário: R$ {funcionario['salario']:.2f}")
+
