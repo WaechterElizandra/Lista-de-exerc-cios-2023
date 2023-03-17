@@ -51,7 +51,7 @@ while True:
             valor_hora = valor_hora_operario_matutino_vespertino
 
     # Cálculo do salário do funcionário
-    salario = valor_hora * horas_trabalhadas
+    salario = valor_hora * horas_trabalhadas / 30
 
     # Adicionando informações do funcionário à lista
     funcionario = {"nome": nome, "horas_trabalhadas": horas_trabalhadas, "turno": turno, "categoria": categoria, "valor_hora": valor_hora, "salario": salario}
@@ -59,5 +59,5 @@ while True:
 
 # Impressão dos salários dos funcionários
 for funcionario in funcionarios:
-    print(f"Nome: {funcionario['nome']} - Salário: R$ {funcionario['salario']:.2f}")
+    print(f"Nome: {funcionario['nome'].upper()} - Salário: R$ {funcionario['salario']:.2f}")
 
